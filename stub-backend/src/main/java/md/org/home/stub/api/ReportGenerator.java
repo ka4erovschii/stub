@@ -108,7 +108,7 @@ public  class ReportGenerator {
 
     public  ReportGenerator() throws JRException, SQLException, IOException {
         System.out.println("********************************** Start test");
-        String reportCompiled= "/Users/apple/Projects/bilete-tratament/bilete-reports/tickets/victoria";
+        String reportCompiled= "/Users/apple/Projects/stub/stub-reports/tickets/victoria";
 
         System.out.println("**********************************"+reportCompiled);
 

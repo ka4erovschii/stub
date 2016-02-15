@@ -40,6 +40,12 @@ public class AuthenticationApi {
 		return Response.ok().build();
 	}
 
+    @GET
+    @Path("/user")
+    public Response users(@HeaderParam("X-Authorization") String token, @Context HttpServletRequest request) throws AuthenticationFailedException {
+        User user = userService.getUser("admin");
+        return Response.ok(user).build();
+    }
 
     @POST
     @Path("/login")

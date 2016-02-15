@@ -33,6 +33,6 @@ public class Main {
 */
 
 
-        System.out.println(PasswordUtility.encode("bocan"));
+        System.out.println(PasswordUtility.encode("admin"));
     }
 }

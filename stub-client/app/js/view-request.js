@@ -1,7 +1,7 @@
 /**
  * Created by apple on 04.03.15.
  */
-angular.module('bilete').controller('Datepicker', function ($scope) {
+angular.module('stub').controller('Datepicker', function ($scope) {
 
     $scope.open = function($event) {
         $event.preventDefault();

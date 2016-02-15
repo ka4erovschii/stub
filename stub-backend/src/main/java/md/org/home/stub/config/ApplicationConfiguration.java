@@ -82,7 +82,7 @@ public class ApplicationConfiguration {
         jpaProterties.put(PROPERTY_NAME_HIBERNATE_FORMAT_SQL, environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_FORMAT_SQL));
         jpaProterties.put(PROPERTY_NAME_HIBERNATE_SHOW_SQL, environment.getRequiredProperty(PROPERTY_NAME_HIBERNATE_SHOW_SQL));
 
-        jpaProterties.put("hibernate.hbm2ddl.auto", "create");
+        jpaProterties.put("hibernate.hbm2ddl.auto", "update");
 
         entityManagerFactoryBean.setJpaProperties(jpaProterties);
         return entityManagerFactoryBean;

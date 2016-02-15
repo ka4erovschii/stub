@@ -15,7 +15,7 @@ public class SpringContextInitializer implements WebApplicationInitializer {
 
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
-        servletContext.setInitParameter("contextConfigLocation", "md.org.home.bilete.config");
+        servletContext.setInitParameter("contextConfigLocation", "md.org.home.stub.config");
         WebApplicationContext rootAppContext = new AnnotationConfigWebApplicationContext();
         servletContext.addListener(new ContextLoaderListener(rootAppContext));
     }
