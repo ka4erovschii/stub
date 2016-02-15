@@ -1,0 +1,17 @@
+{
+    "curly": true,
+    "eqnull": true,
+    "eqeqeq": true,
+    "undef": true,
+    "globals": {
+        "window": true,
+        "Blob": true,
+        "location": true,
+        "jQuery": true,
+        "angular": true,
+        "_": true,
+        "console": true,
+        "setTimeout": true,
+        "SiaasUtils": true
+    }
+}

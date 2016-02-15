@@ -1,0 +1,15 @@
+*.iml
+.idea
+*.jar
+target
+bin
+.classpath
+.settings
+.project
+.idea/*
+.DS_Store
+/.metadata/
+dist/
+*.war
+node_modules
+bower_components

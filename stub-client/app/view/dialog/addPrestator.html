@@ -1,0 +1,68 @@
+<div>
+    <div class="modal-header">
+
+    </div>
+    <div class="modal-body">
+
+        <h4>Adauga prestator nou</h4>
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="prestatorName">Denumire</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5 " >
+                <input type="text" class="form-control"  id="prestatorName"  ng-model="obj.prestatorName">
+            </div>
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="cazUrgent">Caz De Urgenta</label>
+            <div class="col-lg-1 col-md-1 col-sm-1 col-xs-1 " >
+                <input type="checkbox"  id="cazUrgent"  ng-model="obj.cazUrgent">
+            </div>
+        </div>
+
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="prestatorSpecific">Specializare</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " >
+                <input type="text" class="form-control"   id="prestatorSpecific"  ng-model="obj.prestatorSpecific">
+            </div>
+        </div>
+
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="prestatorSpecific">Tel.</label>
+            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3" >
+                <input type="text" class="form-control"     ng-model="obj.prestatorPhone">
+            </div>
+            <label class="col-lg-1 col-md-1 col-sm-1 col-xs-1 notbold" >Țara</label>
+            <div class="col-lg-5 col-md-5 col-sm-5 col-xs-5" >
+                <input type="text" class="form-control"     ng-model="obj.prestatorCountry">
+            </div>
+        </div>
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label class="col-lg-3 col-md-9 col-sm-3 col-xs-3 notbold" >Addressa</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+                <textarea type="textarea" class="form-control"  rows="3"    ng-model="obj.prestatorAdress"></textarea>
+            </div>
+        </div>
+
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12"></div>
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <label class="col-lg-3 col-md-9 col-sm-3 col-xs-3 notbold" >Ruta</label>
+            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+                <textarea type="textarea" class="form-control"  rows="3"    ng-model="obj.prestatorRoute"></textarea>
+            </div>
+        </div>
+
+        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+            <button class="btn btn-success" ng-click="save()">Salvare</button>
+            <button class="btn btn-warning" ng-click="cancel()">Iesire</button>
+        </div>
+        <div class="row"></div>
+        <div class="row"></div>
+        <div class="row"></div>
+    </div>
+
+    <div class="modal-footer">
+        <div class="row"></div>
+    </div>
+</div>

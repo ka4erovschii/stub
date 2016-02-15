@@ -1,0 +1,111 @@
+<!--Nume Prenume Patronimic-->
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="familyName">Nume</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.firstName}">
+            <input type="text" class="form-control"  id="familyName" placeholder="Nume" ng-model="application.member.firstName"
+                   require ng-pattern="/([A-Z][a-z]*)/">
+        </div>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="lastName">Prenume</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.lastName}">
+            <input type="text" class="form-control"  id="lastName" placeholder="Prenume" ng-model="application.member.lastName"
+                   uppercase=""
+                   require ng-pattern="/([A-Z][a-z]*)/">
+        </div>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="patronimic">Patronimic</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.patronimic}">
+            <input type="text" class="form-control"  id="patronimic" placeholder="Patronimic" ng-model="application.member.patronimic"
+                   uppercase=""
+                   require ng-pattern="/([A-Z][a-z]*)/">
+        </div>
+    </div>
+</div>
+<!--Indp seria acte-->
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+    <div class=" form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+        <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="idnp">IDNP</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-model-onblur ng-class="{'has-error':!application.member.idnp}">
+            <input type="text" class="form-control"   id="idnp" ng-bind="checkIdnp(application.member.idnp)"
+                   ng-model="application.member.idnp" placeholder="IDNP"  uppercase=""
+                   require ng-pattern="/([1-9]){13}/" maxlength="13">
+        </div>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+        <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="seria">Seria</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.seria}">
+            <input type="text" class="form-control"   id="seria"
+                   ng-model="application.member.seria" placeholder="seria"  uppercase="">
+        </div>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+        <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="numPensLicence">Nr. Pensionar</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':!application.member.numPensLicence}">
+            <input type="text" class="form-control"   id="numPensLicence"
+                   ng-model="application.member.numPensLicence" placeholder="Numarul legitimatie"  uppercase="">
+        </div>
+    </div>
+</div>
+
+<!--Raion-->
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="raion">Raion</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':!raion}">
+            <select class="form-control" id="raion" ng-model="raion"
+                    ng-options="item as item.nameRo for item in raions" ng-change="selectLoalityByRaionId(raion,'')">
+            </select>
+        </div>
+    </div>
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="localitate">Localitate</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':(application.member.raion && !localitate)}" >
+            <select class="form-control" id="localitate" ng-model="localitate"
+                    ng-options="item as item.nameRo for item in localitaties">
+            </select>
+        </div>
+    </div>
+</div>
+
+<!--Strada appart telefon-->
+<div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+    <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="street">Strada</label>
+        <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"  ng-style="{padding:2}" ng-class="{'has-error':!street}">
+            <input type="text" class="form-control"   id="street"
+                   ng-model="application.member.street" placeholder="Strada">
+        </div>
+    </div>
+    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3" >
+        <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" >
+            <label class="notbold">Nr</label>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-class="{'has-error':!nr}">
+            <input type="text" class="form-control"   id="nr" ng-model="application.member.nr" placeholder="">
+        </div>
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <label class="notbold">Bloc</label>
+        </div>
+        <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+            <input type="text" class="form-control"   id="nrBloc"  ng-model="application.member.nrBloc" placeholder="">
+        </div>
+    </div>
+
+    <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
+        <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+            <label class="notbold">Ap</label>
+        </div>
+        <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+            <input type="text" class="form-control" id="appartament" ng-model="application.member.appartament" placeholder="">
+        </div>
+    </div>
+    <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3">
+        <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="phone">Telefon</label>
+        <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+            <input type="text" class="form-control"   id="phone" ng-model="application.member.phone" placeholder="">
+        </div>
+    </div>
+</div>

@@ -1,0 +1,280 @@
+<div> <!-- ng-controller="RepartizareControllerMMPFS"-->
+    <h1></h1>
+    <h1></h1>
+    <ol class="breadcrumb">
+        <li><a href="#/"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li class="active">Repartizarea biletelor (MMPSF)</li>
+    </ol>
+<tabset  class="nav nav-tabs"   >
+    <tab heading="Repartizare bilete (Prestator)"   ng-click="nextStep('registru')">
+        <h1></h1>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" for="prestator">Denumire Prestator</label>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 ">
+                    <select class="form-control"  id="prestator" ng-model="obj.prestator" ng-disabled="disable" ng-change="selectorHandler()"
+                            ng-options="item as item.nameRo for item in prestatori">
+                    </select>
+                </div>
+                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2" ng-style={padding:0} >
+                    <span >
+                        <button type="button" class="btn btn-default"  ng-click="open($event)"><i class="glyphicon glyphicon-plus"></i></button>
+                      </span>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                <label class="col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label" for="costBilet">Costul biletului de tratament</label>
+                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
+                    <input type="text" min="0" class="form-control"  id="costBilet" ng-disabled="disable" placeholder="Pret" ng-model="obj.price">
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <h1></h1>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" >Anul</label>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 " ng-controller="Datepicker" >
+                    <p class="input-group">
+                        <input type="text" class="form-control" id="year" ng-model="obj.year"  ng-change="selectorHandler()"
+                               datepicker-popup="{{YearFormat}}"    is-open="opened"
+                               show-button-bar="false"
+                               datepicker-options="{minMode: 'year'}" datepicker-mode="'year'"
+                               timestamp disabled/>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default"  ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                </div>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4" for="specific">Specializare</label>
+                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                    <!--<select class="form-control" ng-disabled="disable" id="specific" ng-model="obj.specificatii[1]"
+                            ng-options="specific.id as specific.nameRo for specific in specificatii ">
+                    </select>-->
+                   <input type="text" ng-disabled="!obj.add" class="form-control"   id="specific" ng-model="obj.specificatii[0].nameRo" ng-disabled="true">
+                </div>
+            </div>
+        </div>
+        <div class="row" >
+            <h1></h1>
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  uploader="uploader" filters="queueLimit, customFilter">
+                <span class="btn btn btn-warning btn-file"
+                      ng-disabled="!((obj.specificatii) && (obj.prestator) && (obj.price) && (obj.year) && !(ticketList.length >0))">
+                    <input type="file" nv-file-select="" uploader="uploader" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"/>
+                    Importare grafic de bilete disponibile
+                </span>
+            </div>
+        </div>
+
+        <div class="row" ng-style="{padding:5}">
+            <h1></h1>
+            <p ng-style={color:'red'}>Conform graficului prezentat de catre prestator, sunt disponibile urmatoarele bilete : </p>
+            <div class="row">
+                <table  class="table table-bordered table-striped">
+                        <thead>
+                            <tr>
+                                <th class="text-center">Nr.</th>
+                                <th class="text-center">Nr. bilete de la </th>
+                                <th class="text-center">Nr. bilete pina la</th>
+                                <th class="text-center">Seria</th>
+                                <th class="text-center">durata (zile)</th>
+                                <th class="text-center">Perioada</th>
+                                <th class="text-center">Nr. bilete disponibile</th>
+                                <th class="text-center">Prestator</th>
+                                <th class="text-center">Cost (lei)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="ticket in ticketList | offset: currentPage*itemsPerPage | limitTo: itemsPerPage">
+                                <td class="text-center">{{((currentPage)*itemsPerPage)+$index+1}}</td>
+                                <td class="text-center">{{ticket.nrFrom}}</td>
+                                <td class="text-center">{{ticket.nrTo}}</td>
+                                <td class="text-center">{{ticket.seria}}</td>
+                                <td class="text-center">{{(ticket.dateEnd - ticket.dateStart) | date:'dd'}}</td>
+                                <td class="text-center">{{ticket.dateStart | date:'dd-MM-yyyy'}} - {{ticket.dateEnd | date:'dd-MM-yyyy'}}</td>
+                                <td class="text-center">{{ticket.nrTo - ticket.nrFrom+1}}</td>
+                                <td class="text-center">{{prestatorName}}</td>
+                                <td class="text-center">{{ticket.price}}</td>
+                            </tr>
+                        </tbody>
+
+                    </table>
+                    <div ng-show="(ticketList.length > 0)">
+                        <ul class="pager ng-cloak">
+                            <li ng-class="prevPageDisabled()"><a ng-click="firstPage()" href="" class="glyphicon glyphicon-backward"></a></li>
+                            <li ng-class="prevPageDisabled()"><a ng-click="prevPage()" href="" class="glyphicon glyphicon-chevron-left"></a></li>
+                            <li ng-repeat="n in range()"
+                                ng-class="{active: n == currentPage}" ng-click="setPage(n)">
+                                <a href="#">{{n+1}}</a>
+                            </li>
+                            <li ng-class="nextPageDisabled()"><a ng-click="nextPage()" href="" class="glyphicon glyphicon-chevron-right"></a></li>
+                            <li ng-class="nextPageDisabled()"><a ng-click="lastPage(ticketList.length)" href="" class="glyphicon glyphicon-forward"></a></li>
+                        </ul>
+                    </div>
+                </div>
+        </div>
+
+        <div class="row">
+            <button class="btn btn-default" ng-model="repartizarebtn" ng-disabled="!((ticketList.length >0)&& !(repartisationList.length >0))" ng-click="repartizarePerRaione()">Repartizarea pe raioane</button>
+        </div>
+        <div class="row">
+            <h1></h1>
+            <table class="table table-bordered table-striped ">
+                <tr>
+                    <th class="text-center">Numar</th>
+                    <th class="text-center">Raion</th>
+                    <th class="text-center">Total bilete repartizate per raion</th>
+                    <th class="text-center">Prestator</th>
+                </tr>
+                <tr ng-repeat="item in ticketListOpen ">
+                    <td class="text-center">{{$index+1}}</td>
+                    <td class="text-left">{{item[0].nameRo}}</td>
+                    <td class="text-center">{{item[2]}}</td>
+                    <td class="text-center">{{item[1].nameRo}}</td>
+                </tr>
+                <tr>
+                    <td class="text-center"><b>Total</b></td>
+                    <td class="text-left"></td>
+                    <td class="text-center"><b>{{ticketListOpen[ticketListOpen.length-1].total}}</b></td>
+                    <td class="text-center"></td>
+                </tr>
+            </table>
+        </div>
+        <h1></h1>
+
+    </tab>
+    <tab heading="Repartizare bilete (Raion)"  ng-click="nextStep('registru')" >
+        <h1></h1>
+        <div class="row">
+            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6"  >
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" for="raion">Raionul</label>
+                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8" >
+                    <select class="form-control"  id="raion" ng-model="raion" ng-change="changeRaion(raion)"
+                            ng-options="item as item.nameRo for item in raions ">
+                    </select>
+                </div>
+            </div>
+            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" >
+                <label class="col-xs-4 col-sm-4 col-md-4 col-lg-4 control-label" >Anul</label>
+                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5 " ng-controller="Datepicker">
+                    <p class="input-group">
+                        <input type="text" class="form-control"   datepicker-popup="{{YearFormat}}"
+                               ng-change="listTicketsByRaionId(raion)" ng-model="obj.year"
+                               is-open="opened" show-button-bar="false"
+                               datepicker-options="{minMode: 'year'}" datepicker-mode="'year'"
+                               timestamp disabled/>
+                      <span class="input-group-btn">
+                        <button type="button" class="btn btn-default" ng-disabled="!prestator" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>
+                      </span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <h1></h1>
+        <tabset class="nav nav-tabs"  >
+            <tab heading="Registru bilete repartizate">
+                <h1></h1>
+                <div class="row control-label">
+                    <p  class=" col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label" ng-style={color:'red'}>Bilete de tratament pe raion :</p>
+                </div>
+
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label">
+                    <h1></h1>
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th class="text-center">Nr. </th>
+                            <th class="text-center">Raionul </th>
+                            <th class="text-center">Durata</th>
+                            <th class="text-center">Perioada</th>
+                            <!--<th class="text-center">Bilete disponibile</th>-->
+                            <th class="text-center">Prestator</th>
+                        </tr>
+                        <tr ng-repeat="item in ticketListOpen">
+                            <td class="text-left">{{$index+1}}</td>
+                            <td class="text-left">{{raion.nameRo}}</td>
+                            <td class="text-center">{{(item.dateEnd - item.dateStart) | date:'dd'}}</td>
+                            <td class="text-center">{{item.dateEnd | date:'dd-MM-yyyy'}} - {{item.dateStart | date:'dd-MM-yyyy'}}</td>
+                            <!--<td class="text-center">{{item[2]}}</td>-->
+                            <td class="text-center">{{item.prestator.nameRo}}</td>
+                        </tr>
+                    </table>
+                </div>
+            </tab>
+            <tab heading="Registul bilete solicitate">
+                <div class="row">
+                    <h1></h1>
+                    <p class=" col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label" ng-style={color:'red'}>Registul listelor de solicitari a biletelor de tratament :</p>
+                </div>
+
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label">
+                    <h1></h1>
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th class="text-center">Nr.</th>
+                            <th class="text-center">Raionul</th>
+                            <th class="text-center">Localitatea</th>
+                            <th class="text-center">Nr. cererii</th>
+                            <th class="text-center">Data inregistrarii cererii</th>
+                            <th class="text-center">IDNP</th>
+                            <th class="text-center">Nume</th>
+                            <th class="text-center">Prenume</th>
+                            <th class="text-center">Specificul solicitat</th>
+                            <!--th class="text-center">Aprobat</th>
+                            <th class="text-center">Motiv neaprobare</th>-->
+                        </tr>
+                        <tr ng-repeat="application in applicationsOpen ">
+                            <td class="text-center">{{$index+1}}</td>
+                            <td class="text-center">{{application.member.raion.nameRo}}</td>
+                            <td class="text-center">{{application.member.localitate.nameRo}}</td>
+                            <td class="text-center"><a target="_blank" href="#/cerere/{{application.id}}">A-{{application.id}}</a></td>
+                            <td class="text-center">{{application.date | date:'dd-MM-yyyy'}}</td>
+                            <td class="text-center">{{application.member.idnp}}</td>
+                            <td class="text-center">{{application.member.firstName}}</td>
+                            <td class="text-center">{{application.member.lastName}}</td>
+                            <td class="text-center">{{application.specificatii.nameRo}}</td>
+                      <!--      <td class="text-center">
+                                <label>
+                                    <input type="checkbox" value="" ng-model="aprobat"  ng-checked="(!(application.status == 'OPEN') && application.motiv.length  == 0) " ng-change="checkAprobat(aprobat,application)">
+                                </label>
+                            </td>
+                            <td class="text-left"><span ng-disabled="true">{{application.motiv}}</span></td>-->
+                        </tr>
+                    </table>
+                </div>
+            </tab>
+            <tab heading="Registru biletelor returnate">
+                <div class="row">
+                    <h1></h1>
+                    <p class=" col-xs-6 col-sm-6 col-md-6 col-lg-6 control-label" ng-style={color:'red'}>Registul biletelor returnate :</p>
+                </div>
+
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12 control-label">
+                    <h1></h1>
+                    <table class="table table-bordered table-striped">
+                        <tr>
+                            <th class="text-center">Nr.</th>
+                            <th class="text-center">Seria bilet</th>
+                            <th class="text-center">nr. bilet</th>
+                            <th class="text-center">Durata</th>
+                            <th class="text-center">Perioada</th>
+                            <th class="text-center">Prestator</th>
+                            <th class="text-center">Motiv returnare</th>
+                        </tr>
+                        <!--<tr ng-repeat="item in ticketListReturned ">
+                            <td class="text-left">{{raion.nameRo}}</td>
+                            <td class="text-center">{{(item.dateEnd - item.dateStart) | date:'dd'}}</td>
+                            <td class="text-center">{{item.dateEnd | date:'dd-MM-yyyy'}} - {{item.dateStart | date:'dd-MM-yyyy'}}</td>
+                            <td class="text-center">{{item[2]}}</td>
+                            <td class="text-center">{{item.prestator.nameRo}}</td>
+                            <td class="text-center">{{item.prestator.nameRo}}</td>
+                            <td class="text-center">{{item.prestator.nameRo}}</td>
+                        </tr>-->
+                    </table>
+                </div>
+            </tab>
+        </tabset>
+    </tab>
+</tabset>
+</div>

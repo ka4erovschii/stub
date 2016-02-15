@@ -1,0 +1,744 @@
+<div> <!--ng-controller="NewApplicationController"-->
+    <h1></h1>
+    <h1></h1>
+    <ol class="breadcrumb">
+        <li><a href="#/"><i class="glyphicon glyphicon-home"></i></a></li>
+        <li class="active">Inregistrarea cererilor</li>
+    </ol>
+    <h1></h1>
+    <tabset>
+        <tab heading="Solicitantul" >
+                <form role="form" >
+                    <h4 > Date despre solicitant : </h4>
+                    <h1></h1>
+
+                    <div class="form-group  col-md-12 col-sm-12 col-xs-12 alert alert-danger"  ng-show="obj.invalid" >
+                            <p>*** Cererea poate fi inregestrata numai in caz Urgent. Sau de pe data {{obj.nextRegistrationDate  | date:'dd-MM-yyyy'}}</p>
+                    </div>
+
+
+                    <!--<add-member type="benificiar"></add-member>-->
+                    <!--Nume Prenume Patronimic-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="familyName">Nume</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.firstName}">
+                                <input type="text" class="form-control"  ng-disabled="!obj.add" id="familyName" placeholder="Nume" ng-model="application.member.firstName"
+                                       require ng-pattern="/([A-Z][a-z]*)/">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="lastName">Prenume</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.lastName}">
+                                <input type="text" class="form-control"  ng-disabled="!obj.add" id="lastName" placeholder="Prenume" ng-model="application.member.lastName"
+                                       uppercase=""
+                                       require ng-pattern="/([A-Z][a-z]*)/">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="patronimic">Patronimic</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.patronimic}">
+                                <input type="text" class="form-control" ng-disabled="!obj.add" id="patronimic" placeholder="Patronimic" ng-model="application.member.patronimic"
+                                       uppercase=""
+                                       require ng-pattern="/([A-Z][a-z]*)/">
+                            </div>
+                        </div>
+                    </div>
+                    <!--Indp seria acte-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                            <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="idnp">IDNP</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-model-onblur ng-class="{'has-error':!application.member.idnp}">
+                                <input type="text" class="form-control"  ng-disabled="!obj.add"  id="idnp" ng-change="checkIdnp('member')"
+                                       ng-model="application.member.idnp" placeholder="IDNP"  uppercase=""
+                                       ng-pattern="/([0-9]){13}/" maxlength="13" minlength="13">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                            <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="seria">Seria</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.member.seria}">
+                                <input type="text" class="form-control"  ng-disabled="!obj.add" id="seria"
+                                       ng-model="application.member.seria" placeholder="seria"  uppercase="">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                            <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="numPensLicence">Nr. Pensionar</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                <input type="text" class="form-control" ng-disabled="!obj.add"  id="numPensLicence"
+                                       ng-model="application.member.numPensLicence" placeholder="Numarul legitimatie"  uppercase="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Raion-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="raion">Raion</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':!application.member.raion}">
+                                <select class="form-control" ng-disabled="!obj.add" id="raion" ng-model="application.member.raion"
+                                        ng-options="item as item.nameRo for item in raions" ng-change="selectLoalityByRaionId('member')">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="localitate">Localitate</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':(application.member.raion && !application.member.localitate)}" >
+                                <select class="form-control" ng-disabled="!obj.add" id="localitate" ng-model="application.member.localitate"
+                                        ng-options="item as item.nameRo for item in localitaties">
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Strada appart telefon-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="street">Strada</label>
+                            <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"  ng-style="{padding:2}" ng-class="{'has-error':!application.member.street}">
+                                <input type="text" ng-disabled="!obj.add" class="form-control"   id="street"
+                                       ng-model="application.member.street" placeholder="Strada">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3" >
+                            <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" >
+                                <label class="notbold">Nr</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-class="{'has-error':!application.member.house}">
+                                <input type="text" ng-disabled="!obj.add" class="form-control"   id="nr" ng-model="application.member.house" placeholder="">
+                            </div>
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                <label class="notbold">Bloc</label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <input type="text" ng-disabled="!obj.add" class="form-control"   id="bloc"  ng-model="application.member.block" placeholder="">
+                            </div>
+                        </div>
+
+                        <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                            <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                <label class="notbold">Ap</label>
+                            </div>
+                            <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                <input type="text" ng-disabled="!obj.add"  class="form-control" id="flat" ng-model="application.member.flat" placeholder="">
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                            <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="phone">Telefon</label>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+                                <input type="text" ng-disabled="!obj.add"  class="form-control"   id="phone" ng-model="application.member.phone" placeholder="">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Specificatii-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="notbold" for="specificatii">Specificatii</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':(!application.specificatii)}">
+                                <select class="form-control" ng-disabled="!obj.add" id="specificatii" ng-model="application.specificatii"
+                                        ng-options="specific as specific.nameRo for specific in specificatii " ng-change="selectPrestatorBySpecificCode()">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                            <div class="col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="notbold" for="prestator">Prestator</label>
+                            </div>
+                            <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9"  >
+                                <!--<select class="form-control" id="specSanator" ng-disabled="true" ng-model="application.prestator[0]"
+                                        ng-options="specific as specific.nameRo for specific in prestator">
+                                </select>-->
+                                <input type="text" ng-disabled="!obj.add" class="form-control"   id="prestator" ng-model="obj.prestator[0].nameRo" ng-disabled="true">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--Angjat Urgent-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <hr/>
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label ng-style="{paddingRight:-10}">Angajat in cimpul muncii</label>
+                            </div>
+                            <label class="notbold">
+                                <input type="radio" value="true" ng-disabled="!obj.add" ng-model="application.member.hasJob"> da
+                            </label>
+                            <label class="notbold">
+                                <input type="radio" value="false" ng-disabled="!obj.add" ng-model="application.member.hasJob"> nu
+                            </label>
+                        </div>
+
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label ng-style="{paddingRight:-10}">Caz de urgența</label>
+                            </div>
+                            <label class="notbold">
+                                <input type="radio" data-ng-value="true"  ng-model="application.is_urgent" id="isUrgentYes"  ng-style="{padding:10}"> da
+                            </label>
+                            <label class="notbold">
+                                <input type="radio" data-ng-value="false" ng-model="application.is_urgent"  id="isUrgentNo"  ng-style="{padding:10}"> nu
+                            </label>
+                        </div>
+                    </div>
+
+                    <!--Reduceri-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <hr/>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label><b>Reducere solicitată</b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div>
+                                    <label>
+                                        <input type="radio" value="30" ng-disabled="!obj.add" ng-model="application.descounts"> reducere 30%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div>
+                                    <label>
+                                        <input type="radio" value="70" ng-disabled="!obj.add" ng-model="application.descounts"> reducere 70%
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <div>
+                                    <label>
+                                        <input type="radio" value="100" ng-disabled="!obj.add" ng-model="application.descounts"> gratuit
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--Catigorie-->
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <hr/>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label><b>Categorie</b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4 ">
+                                    <label class="notbold">
+                                        <input type="checkbox" value="" ng-disabled="!obj.add" ng-model="application.member.persnInAge"> Persoana in virsta
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnInAge">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label class="notbold">
+                                        <input type="checkbox" value="" ng-disabled="!obj.add" ng-model="application.member.limitedAge"> In baza limitei de virsta
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnInAge">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-7 col-sm-7 col-md-5 col-lg-7">
+                                <label class="notbold">
+                                        <input type="checkbox" value=""  ng-disabled="!obj.add" ng-model="application.member.benifAlocCity"> beneficiar de alocatie sociala de stat
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnInAge">
+                        <div class=" form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label class="notbold">
+                                        <input type="checkbox" value="" ng-disabled="!obj.add"  ng-model="application.member.benifPension"> beneficiaza de pensie
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label class="notbold">
+                                    <input type="checkbox" value="" ng-disabled="!obj.add" ng-model="application.member.persnWDisabil"> Persoana cu disabilitati
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnWDisabil">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label class="notbold">
+                                        <input type="radio" value="sever" ng-disabled="!obj.add" ng-model="application.member.disabilityCategory" > grad sever
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="((application.member.disabilityCategory == 'sever') && application.member.persnWDisabil)">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label class="notbold">
+                                        <input type="checkbox" value="true" ng-disabled="!obj.add"  ng-model="application.needsGuardian"> necesita insotitor
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnWDisabil">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label class="notbold">
+                                        <input type="radio" value="accentuat" ng-disabled="!obj.add"  ng-model="application.member.disabilityCategory"> grad accentuat
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnWDisabil">
+                        <div class="form-group col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label class="notbold">
+                                        <input type="radio" value="mediu" ng-disabled="!obj.add" ng-model="application.member.disabilityCategory"> grad mediu
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                <label class="notbold">
+                                    <input type="checkbox" ng-disabled="!obj.add" ng-model="application.member.persnRepresat"> Persoane represate si reabilitate ulterior
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnRepresat">
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label class="notbold">
+                                        <input ng-disabled="!obj.add" type="checkbox" value="" > reducere 30%
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.member.persnRepresat">
+                        <div class="form-group  col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                            <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                <label><b></b></label>
+                            </div>
+                            <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                <label class="notbold">
+                                        <input type="checkbox" value="" ng-disabled="!obj.add" > valorificat in 3 ani
+                                    </label>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!--------------Datele despre insotitor:-------------->
+                    <div ng-show="application.needsGuardian">
+                        <h4> Date despre insotitor</h4>
+                        <h1></h1>
+
+                        <!--<add-member type="insotitor"></add-member>-->
+                        <!--Nume Prenume Patronimic-->
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="familyNameG">Nume</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.guardian.firstName}">
+                                    <input type="text" class="form-control" ng-disabled="!obj.add" id="familyNameG" placeholder="Nume" ng-model="application.guardian.firstName"
+                                           require ng-pattern="/([A-Z][a-z]*)/">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="lastNameG">Prenume</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.guardian.lastName}">
+                                    <input type="text" class="form-control"  ng-disabled="!obj.add"  id="lastNameG" placeholder="Prenume" ng-model="application.guardian.lastName"
+                                           uppercase=""
+                                           require ng-pattern="/([A-Z][a-z]*)/">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="patronimicG">Patronimic</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.guardian.patronimic}">
+                                    <input type="text" class="form-control" ng-disabled="!obj.add" id="patronimicG" placeholder="Patronimic" ng-model="application.guardian.patronimic"
+                                           uppercase=""
+                                           require ng-pattern="/([A-Z][a-z]*)/">
+                                </div>
+                            </div>
+                        </div>
+                        <!--Indp seria acte-->
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                                <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="idnp">IDNP</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-model-onblur ng-class="{'has-error':!application.guardian.idnp}">
+                                    <input type="text" class="form-control"  ng-disabled="!obj.add" id="idnpG" ng-change="checkIdnp('guardian')"
+                                           ng-model="application.guardian.idnp" placeholder="IDNP"  uppercase=""
+                                           require ng-pattern="/([0-9]){13}/" maxlength="13" minlength="13">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                                <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="seria">Seria</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9 " ng-class="{'has-error':!application.guardian.seria}">
+                                    <input type="text" class="form-control"  ng-disabled="!obj.add" id="seriaG"
+                                           ng-model="application.guardian.seria" placeholder="seria"  uppercase="">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4 ">
+                                <label  class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="numPensLicenceG">Nr. Pensionar</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9">
+                                    <input type="text" class="form-control" ng-disabled="!obj.add"  id="numPensLicenceG"
+                                           ng-model="application.guardian.numPensLicence" placeholder="Numarul legitimatie"  uppercase="">
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Raion-->
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="raion">Raion</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':!application.guardian.raion}">
+                                    <select class="form-control" ng-disabled="!obj.add" id="raionG" ng-model="application.guardian.raion"
+                                            ng-options="item as item.nameRo for item in raionsGuardian" ng-change="selectLoalityByRaionId('guardian')">
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="localitateG">Localitate</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" ng-class="{'has-error':(application.guardian.raion && !application.guardian.localitate)}" >
+                                    <select class="form-control" ng-disabled="!obj.add" id="localitateG" ng-model="application.guardian.localitate"
+                                            ng-options="item as item.nameRo for item in localitateGuardian">
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!--Strada appart telefon-->
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <div class="form-group col-lg-4 col-md-4 col-sm-4 col-xs-4">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="streetG">Strada</label>
+                                <div class="col-lg-8 col-md-8 col-sm-8 col-xs-8"  ng-style="{padding:2}" ng-class="{'has-error':!application.guardian.street}">
+                                    <input type="text" ng-disabled="!obj.add" class="form-control"   id="streetG"
+                                           ng-model="application.guardian.street" placeholder="Strada">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3" >
+                                <div class="col-xs-1 col-sm-1 col-md-1 col-lg-1" >
+                                    <label class="notbold">Nr</label>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-class="{'has-error':!application.guardian.house}">
+                                    <input type="text" ng-disabled="!obj.add" class="form-control"   id="nrG" ng-model="application.guardian.house" placeholder="">
+                                </div>
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <label class="notbold">Bloc</label>
+                                </div>
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <input type="text" ng-disabled="!obj.add" class="form-control"   id="blockG"  ng-model="application.guardian.block" placeholder="">
+                                </div>
+                            </div>
+
+                            <div class="form-group col-lg-2 col-md-2 col-sm-2 col-xs-2">
+                                <div class="col-xs-2 col-sm-2 col-md-2 col-lg-2">
+                                    <label class="notbold">Ap</label>
+                                </div>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8">
+                                    <input type="text" ng-disabled="!obj.add" class="form-control" id="flatG" ng-model="application.guardian.flat" placeholder="">
+                                </div>
+                            </div>
+                            <div class="form-group col-lg-3 col-md-3 col-sm-3 col-xs-3">
+                                <label class="col-lg-3 col-md-3 col-sm-3 col-xs-3 notbold" for="phone">Telefon</label>
+                                <div class="col-lg-9 col-md-9 col-sm-9 col-xs-9" >
+                                    <input type="text" ng-disabled="!obj.add" class="form-control"   id="phoneG" ng-model="application.guardian.phone" placeholder="">
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <!--Categorie-->
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                            <hr/>
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <label><b>Categorie</b></label>
+                                </div>
+                                <div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 ">
+                                    <label class="notbold">
+                                        <input type="checkbox"  ng-disabled="!obj.add" ng-model="application.guardian.guardianBenifAlocCity"> primeste  alocatii sociale de stat
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <label><b></b></label>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <label class="notbold">
+                                        <input type="checkbox" ng-disabled="!obj.add" ng-model="application.guardian.guardianBenifPension" > beneficiaza de pensie
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" >
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4">
+                                    <label><b></b></label>
+                                </div>
+                                <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                    <label class="notbold">
+                                        <input type="checkbox" ng-disabled="!obj.add" value="" ng-model="application.guardian.guardianPersWdisability"> persoana cu disabilitati
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.guardian.guardianPersWdisability">
+                            <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                    <label><b></b></label>
+                                </div>
+                                <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                    <label class="notbold">
+                                        <input type="radio" ng-disabled="!obj.add" value="accentuat" ng-model="application.guardian.disabilityCategory"> grad accentuat
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12" ng-show="application.guardian.guardianPersWdisability">
+                                <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6">
+                                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5">
+                                        <label><b></b></label>
+                                    </div>
+                                    <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7">
+                                        <label class="notbold">
+                                        <input type="radio" ng-disabled="!obj.add" value="mediu" ng-model="application.guardian.disabilityCategory"> grad mediu
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--------------Button:-------------->
+                    <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                        <hr/>
+                        <button class="btn btn-primary" type="button" ng-click="save()" ng-disabled="!checkNeedData()"><span class="glyphicon glyphicon-floppy-disk"></span> Salvare</button>
+                        <button class="btn btn-success" ng-click="save()" ng-disabled="!checkNeedData()"><span class="glyphicon glyphicon-save"></span> Generare cerere</button>
+                       <h1></h1>
+                    </div>
+
+                </form>
+    </tab>
+        <tab heading="Anexe" ng-show="!obj.add">
+            <form role="form" >
+                <h1></h1>
+                <h4> Acte obligatorii :</h4>
+                <h1></h1>
+
+
+                <div ng-repeat="item in listOfDocType " class="row  col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+                        <span>
+                             <input type="checkbox" checklist-model="application.documentPresent" class="checkboxDoc" checklist-value="item"  ng-checked="(application.documentPresent.indexOf(item) > 0)" />
+                        </span>
+                        <label>{{item.name}}</label>
+                    </div>
+                </div>
+
+                <div  uploader="uploader" filters="queueLimit, customFilter">
+                        <table class="table table-bordered table-striped" ng-file-over>
+                            <thead>
+                            <tr>
+                                <th>Denumire fișier</th>
+                                <th>Dimensiune</th>
+                                <th>Progres</th>
+                                <th>Acțiuni</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr ng-repeat="item in uploader.queue">
+                                <td>{{item.file.name}}</td>
+                                <td>{{(item.file.size/1024/1024)|number:3}} MB</td>
+                                <th>
+                                    <div class="progress">
+                                        <div class="progress-bar" role="progressbar" ng-style="{ 'width': item.progress + '%' }"></div>
+                                    </div>
+                                </th>
+                                <td>
+                                    <a href class="btn btn-success btn-xs force-enabled" ng-click="downloadFile(item)" ng-show="item.isUploaded">
+                                        <span class="glyphicon glyphicon-download-alt"></span>
+                                    </a>
+                                    <a href class="btn btn-danger btn-xs force-enabled" ng-click="removeFile(item)" ng-hide="item.isUploaded">
+                                        <span class="glyphicon glyphicon-trash"></span>
+                                    </a>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <div class="row">
+                            <label class="col-sm-3 control-label">Atașați fișierele</label>
+                            <div class="col-sm-3 ">
+                                <input ng-file-select type="file"   nv-file-select="" uploader="uploader" multiple/>
+                            </div>
+                        </div>
+                    </div>
+
+                <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12" >
+                    <hr/>
+                    <button class="btn btn-primary" type="button" id="uploadFiles" ng-click="uploadFiles()" >Salvare</button>
+                    <h1></h1>
+                </div>
+
+
+                <h1></h1>
+            </form>
+        </tab>
+        <tab heading="Biletul" ng-show="application.ticket">
+            <h1></h1>
+            <div>
+                <div class="row">
+                    <h1></h1>
+                    <h4>Bilet pentru solicitant</h4>
+                </div>
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+                        <label ng-style={padding:0} class="col-xs-4 col-sm-4 col-md-4 col-lg-4  notbold" >Denumire prestator </label>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" >
+                            <input type="text" class="form-control"  ng-disabled="!obj.add"  ng-model="application.ticket.prestator.nameRo" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"  ng-style="{padding:0}">
+                        <label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 notbold">Perioada de la </label>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" ng-controller="Datepicker">
+                            <p class="input-group">
+                                <input type="text" class="form-control"  datepicker-popup="{{format}}"  ng-model="application.ticket.dateStart"
+                                       ng-disabled="!obj.add" is-open="opened" show-button-bar="false" datepicker-options="dateOptions" timestamp disabled/>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 notbold" ng-style={padding:0}>pina la </label>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" ng-controller="Datepicker" ng-style={padding:0}>
+                            <p class="input-group">
+                                <input type="text" class="form-control"  datepicker-popup="{{format}}"  ng-model="application.ticket.dateEnd"
+                                       ng-disabled="!obj.add" is-open="opened" show-button-bar="false" datepicker-options="dateOptions" timestamp disabled/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+                        <label ng-style={padding:0} class="col-xs-4 col-sm-4 col-md-4 col-lg-4  notbold" >Costul biletului</label>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" >
+                            <input type="text" ng-disabled="!obj.add" class="form-control"   ng-model="application.ticket.price">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-style={padding:0} >
+                        <label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 notbold"  >Costul cu reducere</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                            <input type="text" ng-disabled="!obj.add" class="form-control"  value="{{application.ticket.price-(application.ticket.price*(application.descounts/100))}}" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="application.needsGuardian">
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12"  ng-style={padding:0}>
+                    <hr/>
+                    <h1></h1>
+                    <h4>Bilet pentru insotitor</h4>
+                </div>
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+                        <label ng-style={padding:0} class="col-xs-4 col-sm-4 col-md-4 col-lg-4  notbold" >Denumire prestator </label>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" >
+                            <input type="text" class="form-control"  ng-disabled="!obj.add"  ng-model="application.guardianTicket.prestator.nameRo" placeholder="">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4"  ng-style="{padding:0}">
+                        <label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 notbold">Perioada de la </label>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" ng-controller="Datepicker">
+                            <p class="input-group">
+                                <input type="text" class="form-control"  datepicker-popup="{{format}}"  ng-model="application.guardianTicket.dateStart"
+                                       ng-disabled="!obj.add" is-open="opened" show-button-bar="false" datepicker-options="dateOptions" timestamp disabled/>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-xs-3 col-sm-3 col-md-3 col-lg-3">
+                        <label class="col-xs-3 col-sm-3 col-md-3 col-lg-3 notbold" ng-style={padding:0}>pina la </label>
+                        <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9" ng-controller="Datepicker" ng-style={padding:0}>
+                            <p class="input-group">
+                                <input type="text" class="form-control"  datepicker-popup="{{format}}"  ng-model="application.guardianTicket.dateEnd"
+                                       ng-disabled="!obj.add" is-open="opened" show-button-bar="false" datepicker-options="dateOptions" timestamp disabled/>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                    <div class="col-xs-5 col-sm-5 col-md-5 col-lg-5" >
+                        <label ng-style={padding:0} class="col-xs-4 col-sm-4 col-md-4 col-lg-4  notbold" >Costul biletului</label>
+                        <div class="col-xs-7 col-sm-7 col-md-7 col-lg-7" >
+                            <input type="text" ng-disabled="!obj.add" class="form-control"   ng-model="application.guardianTicket.price">
+                        </div>
+                    </div>
+                    <div class="col-xs-4 col-sm-4 col-md-4 col-lg-4" ng-style={padding:0} >
+                        <label class="col-xs-5 col-sm-5 col-md-5 col-lg-5 notbold"  >Costul cu reducere</label>
+                        <div class="col-xs-6 col-sm-6 col-md-6 col-lg-6" >
+                            <input type="text" ng-disabled="!obj.add" class="form-control" >
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row col-xs-12 col-sm-12 col-md-12 col-lg-12">
+                <hr/>
+                <!--<span class="glyphicon glyphicon-save">-->
+                <button class="btn btn-success" ng-click="confirmTicket()" ng-disabled="(application.ticket.status == 'CONFIRMED') || (application.ticket.status == 'REFUSED')">Confirmare bilet</button>
+                <button class="btn btn-danger"   ng-click="refuzTicket()" ng-disabled="(application.ticket.status == 'REFUSED') || (application.ticket.status == 'CONFIRMED') ">Refuz bilet</button>
+                <button class="btn btn-primary" ng-click="open(application)">Returnare bilet</button>
+                <button class="btn btn-warning" >Inchiere bilet</button>
+                <h1></h1>
+            </div>
+
+        </tab>
+    </tabset>
+</div>

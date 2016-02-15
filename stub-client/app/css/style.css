@@ -1,0 +1,117 @@
+.panel-buttons{height: 100px;}
+
+.bottom-space a:hover {text-decoration: none;}
+
+.bottom-space{margin-bottom: 25px;}
+
+.btn-file {
+    position: relative;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 20%;
+    min-height: 70%;
+    margin: 2px;
+    border:1px solid #000000;
+
+}
+
+
+.btn-button {
+    position: relative;
+    overflow: hidden;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 20%;
+    min-height: 70%;
+    margin: 2px;
+    border:1px solid #000000;
+
+}
+.btn-file input[type=file]  {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 50px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+
+.btn-button input[type=button]  {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 50px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+
+
+.btn-file button  {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width: 100%;
+    min-height: 100%;
+    font-size: 50px;
+    text-align: right;
+    filter: alpha(opacity=0);
+    opacity: 0;
+    outline: none;
+    background: white;
+    cursor: inherit;
+    display: block;
+}
+
+
+.gridStyle {
+    border: 1px solid rgb(212,212,212);
+    width: 400px;
+    height: 300px
+}
+
+.ng-table {
+    border: 1px solid #000;
+}
+
+
+.ok {
+    border: 1px solid #228b22;
+
+}
+
+.err{
+    border: 1px solid orangered;
+}
+
+.notbold{
+    font-weight:normal
+}​
+
+.mft-label{
+     font-weight: bold;
+}
+
+.mft-input-file{
+
+ }
+
+.modal-form input[type=text]{
+    width:40px ;
+}
