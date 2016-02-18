@@ -62,6 +62,7 @@
             <groupId>jasper-arial</groupId>
             <artifactId>jasper-arial</artifactId>
             <version>1.0.0</version>
+              <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>javax.inject</groupId>
